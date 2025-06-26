@@ -2,18 +2,18 @@
 
 Este repositorio contiene los modelos de aprendizaje profundo, el código y los resultados del proyecto de título desarrollado por Israel Huentecura en el marco del proyecto **[ProtoIA](https://github.com/P4HBionicsAcademy)**.
 
-[cite_start]El objetivo principal de este trabajo es proporcionar modelos de redes neuronales de alto rendimiento y computacionalmente eficientes para la clasificación de gestos de mano a partir de señales de electromiografía de superficie (sEMG)[cite: 6, 64]. [cite_start]Estos modelos están optimizados para su despliegue en hardware de bajos recursos, como microcontroladores (ej. ESP32), con el fin de potenciar una nueva generación de prótesis de mano asequibles y de código abierto[cite: 34, 35].
+El objetivo principal de este trabajo es proporcionar modelos de redes neuronales de alto rendimiento y computacionalmente eficientes para la clasificación de gestos de mano a partir de señales de electromiografía de superficie (sEMG). Estos modelos están optimizados para su despliegue en hardware de bajos recursos, como microcontroladores (ej. ESP32), con el fin de potenciar una nueva generación de prótesis de mano asequibles y de código abierto.
 
 ## Características Principales
 
-* [cite_start]**Alta Precisión:** Todos los modelos propuestos superaron el 98% de precisión promedio en el conjunto de datos de prueba[cite: 8, 225].
-* [cite_start]**Optimizados para el Borde (Edge):** Se incluyen tres arquitecturas (`EMGHandNet-2D`, `DualStream-Lite`, `CRNN-Attn`) con un tamaño de despliegue inferior a 1.5 MB, haciéndolas viables para microcontroladores[cite: 9, 233, 278].
-* [cite_start]**Listos para *Fine-Tuning*:** Los pesos pre-entrenados se publican para servir como un punto de partida robusto para la personalización a nuevos usuarios[cite: 57, 62, 263], una estrategia clave para la usabilidad en el mundo real.
-* [cite_start]**Investigación Reproducible:** Se proporciona el código y los scripts para permitir la reproducibilidad de los resultados [cite: 65, 68] y fomentar nuevas investigaciones sobre esta base.
+* **Alta Precisión:** Todos los modelos propuestos superaron el 98% de precisión promedio en el conjunto de datos de prueba[cite: 8, 225].
+* **Optimizados para el Borde (Edge):** Se incluyen tres arquitecturas (`EMGHandNet-2D`, `DualStream-Lite`, `CRNN-Attn`) con un tamaño de despliegue inferior a 1.5 MB, haciéndolas viables para microcontroladores.
+* **Listos para *Fine-Tuning*:** Los pesos pre-entrenados se publican para servir como un punto de partida robusto para la personalización a nuevos usuarios, una estrategia clave para la usabilidad en el mundo real.
+* **Investigación Reproducible:** Se proporciona el código y los scripts para permitir la reproducibilidad de los resultados  y fomentar nuevas investigaciones sobre esta base.
 
 ## Resumen de Modelos
 
-[cite_start]Los modelos fueron entrenados y evaluados en el **Estímulo 1 (12 gestos de dedos)** del dataset **NinaPro DB1**[cite: 46, 47, 48]. A continuación se comparan las arquitecturas propuestas y las de referencia.
+Los modelos fueron entrenados y evaluados en el **Estímulo 1 (12 gestos de dedos)** del dataset **NinaPro DB1**. A continuación se comparan las arquitecturas propuestas y las de referencia.
 
 | Modelo | Accuracy en Prueba (μ ± σ) | Tamaño TFLite (MB) | Escenario de Despliegue Recomendado |
 | :--- | :---: | :---: | :--- |
