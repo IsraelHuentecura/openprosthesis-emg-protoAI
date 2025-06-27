@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Huentecura"
+    given-names: "Israel"
+    # Si tienes un ORCID, añádelo aquí. Ejemplo:
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+title: "openprosthesis-emg-protoIA: Modelos de IA y código para la prótesis de mano Proto-IA"
+# Si tienes versiones (releases), especifica la versión que se debe citar.
+# version: 1.0.0 
+# Si tienes una release con fecha, úsala. Si no, usa el año de la última actualización importante.
+date-released: 2024-05-18 
+repository-code: "https://github.com/IsraelHuentecura/openprosthesis-emg-protoIA"
+license: MIT # Revisa y confirma la licencia de tu repositorio
