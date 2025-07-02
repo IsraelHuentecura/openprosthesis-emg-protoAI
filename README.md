@@ -105,6 +105,22 @@ prediction = predict_with_tflite_model(interpreter, input_data)
 print(f"Gesto predicho: {np.argmax(prediction[0]) + 1}")
 ```
 
+## Verificación de Rendimiento con Datos de Prueba
+
+Este repositorio incluye conjuntos de datos de prueba guardados que permiten verificar el rendimiento de los modelos. Para ejecutar una evaluación completa y comprobar la exactitud reportada:
+
+```bash
+python test_with_saved_data.py
+```
+
+Este script evaluará tanto los modelos Keras como los TFLite utilizando los datos de prueba guardados en el directorio `saved_datasets/`. La evaluación mostrará:
+
+- Exactitud de cada modelo en el conjunto de prueba
+- Comparativa de rendimiento entre arquitecturas
+- Verificación para modelos de despliegue en dispositivos de bajos recursos
+
+Los resultados deberían coincidir con las métricas reportadas en las tablas de arriba, confirmando así la reproducibilidad de nuestros experimentos.
+
 ### Cargando los modelos Keras (.keras)
 
 Todos los mejores modelos están disponibles en formato `.keras` en el directorio `models/`. Aquí se muestra cómo cargar cada tipo de modelo:
