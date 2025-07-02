@@ -1,6 +1,6 @@
 # Modelos Ligeros de Clasificación de Gestos sEMG para Prótesis de Código Abierto
 
-Este repositorio contiene los modelos de aprendizaje profundo, el código y los resultados del proyecto de título desarrollado por Israel Huentecura en el marco del proyecto **[ProtoIA](https://github.com/P4HBionicsAcademy)**.
+Este repositorio contiene los modelos de aprendizaje profundo, el código y los resultados del proyecto de título desarrollado por Israel Huentecura en el marco del proyecto **[ProtoAI](https://github.com/ProtoAI-cl/ProtoAI)**.
 
 El objetivo principal de este trabajo es proporcionar modelos de redes neuronales de alto rendimiento y computacionalmente eficientes para la clasificación de gestos de mano a partir de señales de electromiografía de superficie (sEMG). Estos modelos están optimizados para su despliegue en hardware de bajos recursos, como microcontroladores (ej. ESP32), con el fin de potenciar una nueva generación de prótesis de mano asequibles y de código abierto.
 
@@ -107,19 +107,37 @@ print(f"Gesto predicho: {np.argmax(prediction[0]) + 1}")
 
 ## Verificación de Rendimiento con Datos de Prueba
 
-Este repositorio incluye conjuntos de datos de prueba guardados que permiten verificar el rendimiento de los modelos. Para ejecutar una evaluación completa y comprobar la exactitud reportada:
+Este repositorio incluye un script para generar una versión ligera de los conjuntos de datos de prueba, permitiendo verificar el rendimiento de los modelos sin problemas de tamaño para GitHub. El proceso se realiza en dos pasos:
+
+### 1. Generación del Conjunto de Datos Ligero
+
+Primero, debes generar la versión ligera del conjunto de datos de prueba ejecutando:
+
+```bash
+python generate_light_dataset.py
+```
+
+Este script:
+- Toma una muestra representativa y balanceada (por defecto 200 muestras) del conjunto de datos original
+- Reduce significativamente el tamaño de los datos manteniendo la distribución de clases
+- Almacena los datos en el directorio `dataset_test/`
+- Muestra estadísticas sobre la reducción de tamaño lograda
+
+### 2. Evaluación de los Modelos
+
+Una vez generado el conjunto ligero, puedes evaluar los modelos con:
 
 ```bash
 python test_with_saved_data.py
 ```
 
-Este script evaluará tanto los modelos Keras como los TFLite utilizando los datos de prueba guardados en el directorio `saved_datasets/`. La evaluación mostrará:
+Este script evaluará tanto los modelos Keras como los TFLite utilizando los datos ligeros de prueba. La evaluación mostrará:
 
 - Exactitud de cada modelo en el conjunto de prueba
 - Comparativa de rendimiento entre arquitecturas
 - Verificación para modelos de despliegue en dispositivos de bajos recursos
 
-Los resultados deberían coincidir con las métricas reportadas en las tablas de arriba, confirmando así la reproducibilidad de nuestros experimentos.
+Si bien los resultados pueden variar ligeramente respecto a las métricas reportadas en las tablas (debido al muestreo), mantendrán una buena aproximación para demostrar el rendimiento relativo de cada arquitectura.
 
 ### Cargando los modelos Keras (.keras)
 

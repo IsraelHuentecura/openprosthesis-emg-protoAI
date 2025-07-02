@@ -1,0 +1,13 @@
+{
+  "RAW_SHAPE": [
+    20,
+    10,
+    1
+  ],
+  "feat_dim": 100,
+  "num_classes": 12,
+  "light_dataset": true,
+  "original_samples": 33052,
+  "light_samples": 200,
+  "reduction_factor": 165.26
+}

@@ -16,7 +16,7 @@ from src.load_models import BEST_MODELS, load_best_model
 from src.tflite_inference import BEST_TFLITE_MODELS, load_tflite_model, predict_with_tflite_model
 
 # Directorio donde se encuentran los datasets guardados
-SAVED_DATA_DIR = "saved_datasets"
+SAVED_DATA_DIR = "dataset_test"
 MODELS_DIR = "models"
 MODELS_TFLITE_DIR = "models_tflite"
 
@@ -117,7 +117,7 @@ def evaluate_tflite_models(test_X_raw, test_X_feats, test_y_lbl):
             
             # Preparar entradas
             correct = 0
-            total = min(100, test_X_raw.shape[0])  # Limitar a 100 muestras para rapidez
+            total = test_X_raw.shape[0]  # Usar todas las muestras del dataset ligero
             
             print(f"Evaluando con {total} muestras de prueba...")
             
@@ -191,7 +191,7 @@ def main():
     # Verificar existencia de directorios
     if not os.path.exists(SAVED_DATA_DIR):
         print(f"❌ ERROR: No se encontró el directorio {SAVED_DATA_DIR}")
-        print("   Ejecute primero el notebook para generar los datasets guardados.")
+        print("   Ejecute primero el script generate_light_dataset.py para generar la versión ligera de los datos.")
         return
     
     if not os.path.exists(MODELS_DIR):
