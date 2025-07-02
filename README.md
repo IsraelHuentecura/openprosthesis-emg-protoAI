@@ -28,7 +28,7 @@ Los modelos recomendados para despliegue en hardware de recursos limitados son *
 
 ## Resumen de Modelos
 
-Los modelos fueron entrenados y evaluados en el **Estímulo 1 (12 gestos de dedos)** del dataset **NinaPro DB1**. A continuación se comparan las arquitecturas propuestas y las de referencia.
+Los modelos fueron entrenados y evaluados en el **Ejercicio A (12 gestos de dedos)** del dataset **NinaPro DB1**. A continuación se comparan las arquitecturas propuestas y las de referencia.
 
 | Modelo | Accuracy en Prueba (μ ± σ) | Tamaño TFLite (MB) | Escenario de Despliegue Recomendado |
 | :--- | :---: | :---: | :--- |
@@ -44,6 +44,34 @@ Los modelos fueron entrenados y evaluados en el **Estímulo 1 (12 gestos de dedo
 ### Prerrequisitos
 - Python 3.8+
 - TensorFlow 2.10+
+
+### Modelos TFLite para Dispositivos de Bajos Recursos
+
+Para el despliegue en dispositivos con recursos limitados (microcontroladores, dispositivos edge), se proporcionan versiones optimizadas en formato TFLite de los mejores modelos:
+
+| Arquitectura | Modelo TFLite | Tamaño (MB) | Formato | Uso Recomendado |
+| :--- | :--- | :---: | :--- | :--- |
+| **EMGHandNet-2D** | `EMGHandNet-2D_fold1_float32.tflite` | 1.33 | float32 | Mejor balance entre precisión y tamaño |
+| **DualStream-Lite** | `DualStream-Lite_fold1_float32.tflite` | 1.07 | float32 | Menor tamaño, buenos resultados |
+| **CRNN-Attn** | `CRNN-Attn_fold1_quant_int8.tflite` | 0.32 | int8 (cuantizado) | Máximo ahorro de espacio |
+
+Los modelos TFLite se pueden encontrar en el directorio `models_tflite/`. Para facilitar su uso, hemos creado la utilidad `tflite_inference.py` que simplifica la carga e inferencia con estos modelos.
+
+```python
+# Ejemplo de uso de los modelos TFLite
+from src.tflite_inference import load_tflite_model, predict_with_tflite_model
+
+# Cargar modelo TFLite optimizado para dispositivos de bajos recursos
+interpreter = load_tflite_model("models_tflite/EMGHandNet-2D_fold1_float32.tflite")
+
+# Datos EMG de ejemplo (shape depende del modelo)
+import numpy as np
+emg_data = np.random.rand(1, 1, 400, 8).astype(np.float32)  # Para EMGHandNet-2D
+
+# Realizar predicción
+prediction = predict_with_tflite_model(interpreter, emg_data)
+print(f"Gesto predicho: {np.argmax(prediction[0]) + 1}")
+```
 
 ### Cargando los modelos Keras (.keras)
 
