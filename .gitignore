@@ -193,13 +193,12 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
-# Saved datasets - ignorar todo excepto los tensores de test
-saved_datasets/*
-!saved_datasets/meta.json
-!saved_datasets/test_X_raw.npy
-!saved_datasets/test_X_feats.npy
-!saved_datasets/test_y_lbl.npy
-!saved_datasets/y_te.npy
+# Saved datasets - ignorar todo el directorio completo
+saved_datasets/
+
+# Mantener el directorio dataset_test para versiones ligeras
+!dataset_test/
+!dataset_test/*
 
 # Ignorar directorios de datasets
 saved_datasets/train_ds_*
