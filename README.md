@@ -57,6 +57,18 @@ Para el despliegue en dispositivos con recursos limitados (microcontroladores, d
 
 Los modelos TFLite se pueden encontrar en el directorio `models_tflite/`. Para facilitar su uso, hemos creado la utilidad `tflite_inference.py` que simplifica la carga e inferencia con estos modelos.
 
+#### Probando los modelos TFLite
+
+Para probar rápidamente todos los modelos TFLite disponibles, ejecute:
+
+```bash
+python -m src.tflite_inference
+```
+
+Este comando demostrará la carga e inferencia con cada tipo de modelo TFLite (entrada única, entrada dual y modelos cuantizados), mostrando la información de cada modelo, sus requisitos de entrada y resultados de predicción.
+
+#### Uso en código propio
+
 ```python
 # Ejemplo de uso de los modelos TFLite
 from src.tflite_inference import load_tflite_model, predict_with_tflite_model
@@ -70,6 +82,26 @@ emg_data = np.random.rand(1, 1, 400, 8).astype(np.float32)  # Para EMGHandNet-2D
 
 # Realizar predicción
 prediction = predict_with_tflite_model(interpreter, emg_data)
+print(f"Gesto predicho: {np.argmax(prediction[0]) + 1}")
+```
+
+#### Para modelos de entrada dual (DualStream y HyT-Net):
+
+```python
+from src.tflite_inference import load_tflite_model, predict_with_tflite_model
+
+# Cargar modelo TFLite de entrada dual
+interpreter = load_tflite_model("models_tflite/DualStream-Lite_fold1_float32.tflite")
+
+# Crear datos de entrada para ambas ramas
+import numpy as np
+input_data = {
+    'raw_input': np.random.rand(1, 400, 8).astype(np.float32),    # Datos EMG crudos
+    'feat_input': np.random.rand(1, 9, 8).astype(np.float32)       # Features extraídas
+}
+
+# Realizar predicción
+prediction = predict_with_tflite_model(interpreter, input_data)
 print(f"Gesto predicho: {np.argmax(prediction[0]) + 1}")
 ```
 
