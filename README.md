@@ -22,7 +22,7 @@ La elección del modelo depende del hardware donde se quiera ejecutar:
 
 ---
 
-### 🔹 Para Prototipos en Desarrollo y Pruebas Locales
+### 🔹 Para Microprocesadores (ESP32)
 
 | Modelo            | Precisión (Test)  | Tamaño `.h5` |
 | ----------------- | ----------------- | ------------ |
@@ -52,6 +52,15 @@ La elección del modelo depende del hardware donde se quiera ejecutar:
 ---
 
 ## 🚀 Cómo Empezar
+
+### 0. Descarga el Dataset Procesado
+
+Debes descargar el dataset preprocesado de elaboración propia desde el siguiente enlace:
+[Dataset Procesado](https://doi.org/10.5281/zenodo.15801272)
+
+Descomprime el archivo y obtendrás la carpeta `saved_datasets/` con los datasets de entrenamiento y prueba.
+
+La carpeta debe estar en la raíz del repositorio para que los scripts puedan acceder a ella.
 
 ### 1. Instala dependencias
 
@@ -136,8 +145,9 @@ Fuente: Evaluación sobre NinaPro DB1 - Ejercicio A, siguiendo protocolo de vali
 
 ## 📄 Referencias
 
-* Paper asociado: [`EMG-Based Gesture Recognition Using Hybrid and Transformer-Based Deep Learning Models`](./EMG_Israel_Huentecura_IEEE.pdf)
+* Trabajo asociado: [`Lightweight Deep Learning Models for sEMG-based Hand Gesture Classification on Low-Resource Devices`](./EMG_Israel_Huentecura_IEEE.pdf)
 * Dataset base: [NinaPro DB1](http://ninapro.hevs.ch/DB1)
+* Dataset preprocesado: [Dataset Procesado](https://doi.org/10.5281/zenodo.15801272)
 * Proyecto madre: [ProtoIA](https://github.com/ProtoAI-cl/ProtoAI)
 
 ---
