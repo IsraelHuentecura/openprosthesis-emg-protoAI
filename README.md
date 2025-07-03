@@ -1,239 +1,148 @@
-# Modelos Ligeros de Clasificación de Gestos sEMG para Prótesis de Código Abierto
+# Clasificación de Gestos sEMG con Modelos Ligeros de Deep Learning
 
-Este repositorio contiene los modelos de aprendizaje profundo, el código y los resultados del proyecto de título desarrollado por Israel Huentecura en el marco del proyecto **[ProtoAI](https://github.com/ProtoAI-cl/ProtoAI)**.
+Este repositorio contiene los modelos `.h5`, el código y las herramientas desarrolladas para clasificar 12 gestos de la mano a partir de señales de **electromiografía de superficie (sEMG)**, como parte del proyecto de título de **Israel Huentecura** en el contexto de **[ProtoIA](https://github.com/ProtoAI-cl/ProtoAI)**.
 
-El objetivo principal de este trabajo es proporcionar modelos de redes neuronales de alto rendimiento y computacionalmente eficientes para la clasificación de gestos de mano a partir de señales de electromiografía de superficie (sEMG). Estos modelos están optimizados para su despliegue en hardware de bajos recursos, como microcontroladores (ej. ESP32), con el fin de potenciar una nueva generación de prótesis de mano asequibles y de código abierto.
+El objetivo es proveer **modelos de alto rendimiento y bajo costo computacional**, especialmente diseñados para ser desplegados en dispositivos de bajo consumo como Raspberry Pi o microcontroladores más potentes.
 
-## 🏆 Mejores Modelos por Arquitectura
+---
 
-A continuación se presentan los mejores modelos para cada arquitectura, basados en su precisión en el conjunto de pruebas:
+## 🧠 ¿Qué Modelo Deberías Usar?
 
-| Arquitectura | Mejor Modelo | Precisión en Prueba | Tamaño |
-|-------------|--------------|---------------------|--------|
-| **HyT-Net** | `HyT-Net_fold1_BEST.keras` | **0.9988** | 10.4 MB |
-| **EMGHandNet-2D** | `EMGHandNet-2D_fold6_BEST.keras` | 0.9984 | 4.2 MB |
-| **DualStream-Original** | `DualStream-Original_fold3_BEST.keras` | 0.9986 | 36.6 MB |
-| **EMGHandNet-Original** | `EMGHandNet-Original_fold9_BEST.keras` | 0.9982 | 19.8 MB |
-| **DualStream-Lite** | `DualStream-Lite_fold8_BEST.keras` | 0.9946 | 3.4 MB |
-| **CRNN-Attn** | `CRNN-Attn_fold1_BEST.keras` | 0.9881 | 3.6 MB |
+La elección del modelo depende del hardware donde se quiera ejecutar:
 
-Los modelos recomendados para despliegue en hardware de recursos limitados son **EMGHandNet-2D**, **DualStream-Lite** y **CRNN-Attn** debido a su menor tamaño y buen rendimiento.
+### 🔹 Para Computadores Monoplaca (Ej. Raspberry Pi, Jetson Nano)
 
-## Características Principales
+| Modelo              | Precisión (Test)  | Tamaño `.h5` |
+| ------------------- | ----------------- | ------------ |
+| **HyT-Net**         | **99.83% ± 0.02** | \~10.4 MB    |
+| DualStream-Original | 99.82% ± 0.03     | \~36.6 MB    |
+| EMGHandNet-Original | 99.80% ± 0.02     | \~19.8 MB    |
 
-* **Alta Precisión:** Todos los modelos propuestos superaron el 98% de precisión promedio en el conjunto de datos de prueba.
-* **Optimizados para el Borde (Edge):** Se incluyen tres arquitecturas (`EMGHandNet-2D`, `DualStream-Lite`, `CRNN-Attn`) con un tamaño de despliegue inferior a 1.5 MB, haciéndolas viables para microcontroladores.
-* **Listos para *Fine-Tuning*:** Los pesos pre-entrenados se publican para servir como un punto de partida robusto para la personalización a nuevos usuarios, una estrategia clave para la usabilidad en el mundo real.
-* **Investigación Reproducible:** Se proporciona el código y los scripts para permitir la reproducibilidad de los resultados y fomentar nuevas investigaciones sobre esta base.
+**✔ Recomendado: HyT-Net**, por su precisión máxima con menor tamaño que los modelos de referencia.
 
-## Resumen de Modelos
+---
 
-Los modelos fueron entrenados y evaluados en el **Ejercicio A (12 gestos de dedos)** del dataset **NinaPro DB1**. A continuación se comparan las arquitecturas propuestas y las de referencia.
+### 🔹 Para Prototipos en Desarrollo y Pruebas Locales
 
-| Modelo | Accuracy en Prueba (μ ± σ) | Tamaño TFLite (MB) | Escenario de Despliegue Recomendado |
-| :--- | :---: | :---: | :--- |
-| **`HyT-Net`** | **0.9983 ± 0.0002** | 3.27 | **Alto Rendimiento (ej. Raspberry Pi):** Máxima precisión donde la memoria no es el factor más crítico. |
-| **`EMGHandNet-2D`** | 0.9978 ± 0.0003 | 1.33 | **Microcontrolador (Balanceado):** El mejor equilibrio entre alta precisión, eficiencia y arquitectura *end-to-end*. |
-| **`DualStream-Lite`** | 0.9941 ± 0.0003 | 1.07 | **Microcontrolador (Ultra-Ligero):** La opción más pequeña, ideal para hardware con restricciones de memoria extremas. |
-| `CRNN-Attn` | 0.9855 ± 0.0015 | 1.14 | Experimental. Menor estabilidad en las pruebas. |
-| `DualStream-Original` | 0.9982 ± 0.0003 | 11.65 | Referencia (No apto para microcontroladores). |
-| `EMGHandNet-Original` | 0.9980 ± 0.0002 | 6.30 | Referencia (No apto para microcontroladores). |
+| Modelo            | Precisión (Test)  | Tamaño `.h5` |
+| ----------------- | ----------------- | ------------ |
+| **EMGHandNet-2D** | **99.78% ± 0.03** | \~4.2 MB     |
+| DualStream-Lite   | 99.41% ± 0.03     | \~3.4 MB     |
+| CRNN-Attn         | 98.55% ± 0.15     | \~3.6 MB     |
 
-## Cómo Cargar los Modelos
+**✔ Recomendado: EMGHandNet-2D**, el mejor balance entre precisión, arquitectura simple (*end-to-end*) y tamaño reducido.
 
-### Prerrequisitos
-- Python 3.8+
-- TensorFlow 2.10+
+> ⚠️ Ten en cuenta que actualmente estos modelos no están preparados para microcontroladores sin conversión a TFLite o cuantización. Este repositorio se centra en desarrollo y evaluación en entorno de entrenamiento.
 
-### Modelos TFLite para Dispositivos de Bajos Recursos
+---
 
-Para el despliegue en dispositivos con recursos limitados (microcontroladores, dispositivos edge), se proporcionan versiones optimizadas en formato TFLite de los mejores modelos:
-
-| Arquitectura | Modelo TFLite | Tamaño (MB) | Formato | Uso Recomendado |
-| :--- | :--- | :---: | :--- | :--- |
-| **EMGHandNet-2D** | `EMGHandNet-2D_fold1_float32.tflite` | 1.33 | float32 | Mejor balance entre precisión y tamaño |
-| **DualStream-Lite** | `DualStream-Lite_fold1_float32.tflite` | 1.07 | float32 | Menor tamaño, buenos resultados |
-| **CRNN-Attn** | `CRNN-Attn_fold1_quant_int8.tflite` | 0.32 | int8 (cuantizado) | Máximo ahorro de espacio |
-
-Los modelos TFLite se pueden encontrar en el directorio `models_tflite/`. Para facilitar su uso, hemos creado la utilidad `tflite_inference.py` que simplifica la carga e inferencia con estos modelos.
-
-#### Probando los modelos TFLite
-
-Para probar rápidamente todos los modelos TFLite disponibles, ejecute:
+## 🗂️ Contenido del Repositorio
 
 ```bash
-python -m src.tflite_inference
+📁 models_h5/               # Modelos pre-entrenados en formato .h5
+📁 models_tflite/           # Modelos convertidos a TFLite
+📁 saved_datasets/          # Dataset de entrenamiento y prueba (debes descargarlo)
+📁 test_data_sample/        # Dataset de prueba (no debe ser descargado)
+📄 script_test_h5.py        # Evalúa todos los modelos .h5 con un dataset de muestra
+📄 ejemplo_finetuning.py    # Fine-tuning del modelo HyT-Net
+📄 notebook_entrenamiento.ipynb # Notebook para construir y entrenar modelos desde cero
+📄 requirements.txt         # Dependencias necesarias
 ```
 
-Este comando demostrará la carga e inferencia con cada tipo de modelo TFLite (entrada única, entrada dual y modelos cuantizados), mostrando la información de cada modelo, sus requisitos de entrada y resultados de predicción.
+---
 
-#### Uso en código propio
+## 🚀 Cómo Empezar
 
-```python
-# Ejemplo de uso de los modelos TFLite
-from src.tflite_inference import load_tflite_model, predict_with_tflite_model
+### 1. Instala dependencias
 
-# Cargar modelo TFLite optimizado para dispositivos de bajos recursos
-interpreter = load_tflite_model("models_tflite/EMGHandNet-2D_fold1_float32.tflite")
-
-# Datos EMG de ejemplo (shape depende del modelo)
-import numpy as np
-emg_data = np.random.rand(1, 1, 400, 8).astype(np.float32)  # Para EMGHandNet-2D
-
-# Realizar predicción
-prediction = predict_with_tflite_model(interpreter, emg_data)
-print(f"Gesto predicho: {np.argmax(prediction[0]) + 1}")
-```
-
-#### Para modelos de entrada dual (DualStream y HyT-Net):
-
-```python
-from src.tflite_inference import load_tflite_model, predict_with_tflite_model
-
-# Cargar modelo TFLite de entrada dual
-interpreter = load_tflite_model("models_tflite/DualStream-Lite_fold1_float32.tflite")
-
-# Crear datos de entrada para ambas ramas
-import numpy as np
-input_data = {
-    'raw_input': np.random.rand(1, 400, 8).astype(np.float32),    # Datos EMG crudos
-    'feat_input': np.random.rand(1, 9, 8).astype(np.float32)       # Features extraídas
-}
-
-# Realizar predicción
-prediction = predict_with_tflite_model(interpreter, input_data)
-print(f"Gesto predicho: {np.argmax(prediction[0]) + 1}")
-```
-
-## Verificación de Rendimiento con Datos de Prueba
-
-Este repositorio incluye un script para generar una versión ligera de los conjuntos de datos de prueba, permitiendo verificar el rendimiento de los modelos sin problemas de tamaño para GitHub. El proceso se realiza en dos pasos:
-
-### 1. Generación del Conjunto de Datos Ligero
-
-Primero, debes generar la versión ligera del conjunto de datos de prueba ejecutando:
+Usa un entorno virtual y ejecuta:
 
 ```bash
-python generate_light_dataset.py
+pip install -r requirements.txt
 ```
 
-Este script:
-- Toma una muestra representativa y balanceada (por defecto 200 muestras) del conjunto de datos original
-- Reduce significativamente el tamaño de los datos manteniendo la distribución de clases
-- Almacena los datos en el directorio `dataset_test/`
-- Muestra estadísticas sobre la reducción de tamaño lograda
+> Este proyecto está probado en **Python 3.9** y usa **TensorFlow 2.10.0**.
 
-### 2. Evaluación de los Modelos
+---
 
-Una vez generado el conjunto ligero, puedes evaluar los modelos con:
+### 2. Descarga el Dataset Procesado
+
+Debes tener una carpeta `saved_datasets/` con los siguientes datasets:
+
+* `train_ds_h/` y `test_ds_h/`: para entrenamiento y prueba
+* `sample_raw_ds/` y `sample_hybrid_ds/`: para pruebas rápidas
+
+> 🔗 Agrega tu link de descarga aquí para que otros puedan acceder a estos datos.
+
+---
+
+## ⚙️ Opciones de Uso
+
+### ✅ A. Evaluar Modelos `.h5` Rápidamente
 
 ```bash
-python test_with_saved_data.py
+python script_test_h5.py
 ```
 
-Este script evaluará tanto los modelos Keras como los TFLite utilizando los datos ligeros de prueba. La evaluación mostrará:
+Este script evalúa los modelos preentrenados con un dataset pequeño y muestra un resumen de precisión por modelo.
 
-- Exactitud de cada modelo en el conjunto de prueba
-- Comparativa de rendimiento entre arquitecturas
-- Verificación para modelos de despliegue en dispositivos de bajos recursos
+---
 
-Si bien los resultados pueden variar ligeramente respecto a las métricas reportadas en las tablas (debido al muestreo), mantendrán una buena aproximación para demostrar el rendimiento relativo de cada arquitectura.
+### ✅ B. Entrenar Desde Cero
 
-### Cargando los modelos Keras (.keras)
+Abre el notebook:
 
-Todos los mejores modelos están disponibles en formato `.keras` en el directorio `models/`. Aquí se muestra cómo cargar cada tipo de modelo:
-
-```python
-import tensorflow as tf
-import numpy as np
-from tensorflow.keras.models import load_model
-
-# Definir la ruta al modelo que deseas cargar
-MODEL_PATH = "models/HyT-Net_fold1_BEST.keras"  # Cambia esto según el modelo que desees usar
-
-# Cargar el modelo
-model = load_model(MODEL_PATH)
-
-# Verificar la arquitectura del modelo
-print(f"Modelo cargado: {model.name}")
-print(f"Capas del modelo:")
-model.summary()
-
-# Preparar datos de entrada para inferencia (ejemplo con datos aleatorios)
-# La forma de entrada dependerá del modelo específico:
-
-if "HyT-Net" in MODEL_PATH or "DualStream" in MODEL_PATH or "CRNN-Attn" in MODEL_PATH:
-    # Estos modelos esperan dos entradas: raw y features
-    t_subwin = 5  # Número de sub-ventanas por secuencia
-    win_len = 20  # Longitud de la ventana
-    n_channels = 10  # Número de canales EMG
-    feat_dim = 100  # Dimensión de características (10 por canal × 10 canales)
-    
-    # Datos aleatorios para ejemplo
-    raw_data = np.random.rand(1, t_subwin, win_len, n_channels, 1).astype(np.float32)
-    feat_data = np.random.rand(1, t_subwin, feat_dim).astype(np.float32)
-    
-    # Realizar predicción
-    if "DualStream" in MODEL_PATH:
-        # Modelo DualStream usa nombres específicos para las entradas
-        predictions = model.predict({"raw": raw_data, "feat": feat_data})
-    else:
-        # HyT-Net y CRNN-Attn usan nombres diferentes
-        predictions = model.predict({"raw": raw_data, "feat_input": feat_data})
-else:
-    # EMGHandNet-2D y EMGHandNet-Original solo esperan una entrada: raw
-    t_subwin = 5
-    win_len = 20
-    n_channels = 10
-    
-    # Datos aleatorios para ejemplo
-    raw_data = np.random.rand(1, t_subwin, win_len, n_channels, 1).astype(np.float32)
-    
-    # Realizar predicción
-    predictions = model.predict(raw_data)
-
-# Obtener la clase predicha
-predicted_class = np.argmax(predictions, axis=1)[0]
-print(f"Clase predicha (índice 0-11): {predicted_class}")
-print(f"Etiqueta de gesto (1-12): {predicted_class + 1}")
+```bash
+jupyter lab
 ```
 
-### Cargando modelos en formato TFLite
+Edita y ejecuta `notebook_entrenamiento.ipynb` para construir modelos desde cero.
 
-Para dispositivos con recursos limitados, se recomienda usar los modelos en formato TFLite:
+---
 
-```python
-import tensorflow as tf
-import numpy as np
+### ✅ C. Fine-tuning Personalizado
 
-# Cargar el modelo TFLite
-interpreter = tf.lite.Interpreter(model_path="models_tflite/EMGHandNet-2D.tflite")
-interpreter.allocate_tensors()
+Para adaptar un modelo preentrenado (ej. `HyT-Net`) a nuevos datos:
 
-# Obtener detalles de entrada y salida
-input_details = interpreter.get_input_details()
-output_details = interpreter.get_output_details()
+```bash
+python ejemplo_finetuning.py
+```
 
-# Mostrar información de las entradas requeridas
-print("Detalles de entrada:")
-for input_detail in input_details:
-    print(f"  - Nombre: {input_detail['name']}, Forma: {input_detail['shape']}")
+El script:
 
-# Preparar datos de ejemplo (adaptar según el modelo específico)
-t_subwin = 5
-win_len = 20
-n_channels = 10
-input_shape = input_details[0]['shape']
-input_data = np.random.rand(*input_shape).astype(np.float32)
+1. Carga el modelo preentrenado
+2. Congela las capas base
+3. Reentrena las últimas capas con una tasa de aprendizaje baja (`1e-5`) por 10 épocas
+4. Evalúa el nuevo rendimiento
 
-# Establecer el tensor de entrada y ejecutar la inferencia
-interpreter.set_tensor(input_details[0]['index'], input_data)
-interpreter.invoke()
+> ✍️ Puedes modificar `ejemplo_finetuning.py` para aplicar fine-tuning a otros modelos.
 
-# Obtener el resultado
-output_data = interpreter.get_tensor(output_details[0]['index'])
-predicted_gesture_index = np.argmax(output_data)
-predicted_gesture_label = predicted_gesture_index + 1
+---
 
-print(f"Índice de salida predicho: {predicted_gesture_index}")
-print(f"Etiqueta de gesto predicha: {predicted_gesture_label}")
+## 📊 Resultados Técnicos (Resumen)
+
+| Modelo              | Test Accuracy (± σ) | Tamaño `.h5` | Entradas Requeridas       |
+| ------------------- | ------------------- | ------------ | ------------------------- |
+| **HyT-Net**         | 0.9983 ± 0.0002     | \~10.4 MB    | Señales crudas + features |
+| DualStream-Original | 0.9982 ± 0.0003     | \~36.6 MB    | Señales crudas + features |
+| EMGHandNet-Original | 0.9980 ± 0.0002     | \~19.8 MB    | Señales crudas            |
+| **EMGHandNet-2D**   | 0.9978 ± 0.0003     | \~4.2 MB     | Señales crudas            |
+| DualStream-Lite     | 0.9941 ± 0.0003     | \~3.4 MB     | Señales crudas + features |
+| CRNN-Attn           | 0.9855 ± 0.0015     | \~3.6 MB     | Señales crudas + features |
+
+Fuente: Evaluación sobre NinaPro DB1 - Ejercicio A, siguiendo protocolo de validación cruzada 10-fold.
+
+---
+
+## 📄 Referencias
+
+* Paper asociado: [`EMG-Based Gesture Recognition Using Hybrid and Transformer-Based Deep Learning Models`](./EMG_Israel_Huentecura_IEEE.pdf)
+* Dataset base: [NinaPro DB1](http://ninapro.hevs.ch/DB1)
+* Proyecto madre: [ProtoIA](https://github.com/ProtoAI-cl/ProtoAI)
+
+---
+
+## 🧠 Autoría
+
+Desarrollado por **Israel Huentecura Rodríguez**
+---
