@@ -156,3 +156,8 @@ Fuente: Evaluación sobre NinaPro DB1 - Ejercicio A, siguiendo protocolo de vali
 
 Desarrollado por **Israel Huentecura Rodríguez**
 ---
+## 📜 Licencia
+
+Este repositorio está licenciado bajo la [Licencia Creative Commons Atribución-NoComercial 4.0 Internacional (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/).
+
+Esto significa que puedes usar, modificar y compartir este trabajo con fines no comerciales, siempre que cites al autor original. Para usos comerciales, por favor contacta a israel.huentecura@mayor.cl.
