@@ -1,6 +1,6 @@
 # Clasificación de Gestos sEMG con Modelos Ligeros de Deep Learning
 
-Este repositorio contiene los modelos `.h5`, el código y las herramientas desarrolladas para clasificar 12 gestos de la mano a partir de señales de **electromiografía de superficie (sEMG)**, como parte del proyecto de título de **Israel Huentecura** en el contexto de **[ProtoIA](https://github.com/ProtoAI-cl/ProtoAI)**.
+Este repositorio contiene los modelos `.h5`, el código y las herramientas desarrolladas para clasificar 12 gestos de la mano a partir de señales de **electromiografía de superficie (sEMG)**, como parte del proyecto de título de **Israel Huentecura** en el contexto de **[ProtoAI](https://github.com/ProtoAI-cl/ProtoAI)**.
 
 El objetivo es proveer **modelos de alto rendimiento y bajo costo computacional**, especialmente diseñados para ser desplegados en dispositivos de bajo consumo como Raspberry Pi o microcontroladores más potentes.
 
